@@ -27,13 +27,15 @@ jobs:
         run: |
           forge clean
 
-      - name: Remappings
-        run: |
-          forge remappings
-
       - name: Install dependencies
         run: |
-          forge install
+          forge install Cyfrin/foundry-devops --no-commit
+          forge install foundry-rs/forge-std --no-commit
+          forge install smartcontractkit/chainlink-brownie-contracts --no-commit
+          
+      -  name: Remappings
+         run: |
+          forge remappings > remappings.txt
 
       - name: Show Forge version
         run: |
