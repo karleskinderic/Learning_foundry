@@ -23,6 +23,10 @@ jobs:
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
 
+      - name: Clean workspace
+        run: |
+          forge clean
+
       - name: Install dependencies
         run: |
           forge install
