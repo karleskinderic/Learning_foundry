@@ -4,7 +4,11 @@ out = "out"
 libs = ["lib"]
 rpc_url = "${SEPOLIA_RPC_URL}"
 
-remappings = ['@chainlink/contracts/=lib/chainlink-brownie-contracts/contracts/']
+remappings = [
+    '@chainlink/contracts/=lib/chainlink-brownie-contracts/contracts/',
+    '@forge-std=lib/forge-std/',
+    '@foundry-devops=lib/foundry-devops/'
+]
 ffi = false
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
