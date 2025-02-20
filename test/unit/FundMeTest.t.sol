@@ -9,14 +9,13 @@ import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
 contract FundMeTest is Test {
     FundMe fundMe;
     DeployFundMe deployFundMe;
-     
+
     address USER = makeAddr("user");
     uint256 constant SEND_VALUE = 0.1 ether; // 100000000000000000 wei
     uint256 constant STARTING_BALANCE = 10 ether;
     uint256 constant GAS_PRICE = 1;
 
     function setUp() external {
-
         // fundMe = new FundMe();
 
         deployFundMe = new DeployFundMe(); // optimized for refactoring
@@ -26,12 +25,10 @@ contract FundMeTest is Test {
 
     function testMinimumDollarIsFive() public {
         assertEq(fundMe.MINIMUM_USD(), 5e18);
-        
     }
-    
+
     function testOwnerIsMsgSender() public {
         assertEq(fundMe.getOwner(), msg.sender);
-        
     }
 
     function testPriceFeedVersionIsAccurate() public {
@@ -50,7 +47,7 @@ contract FundMeTest is Test {
 
         fundMe.fund{value: SEND_VALUE}();
         uint256 amountFunded = fundMe.getAddressToAmountFunded(USER);
-        assertEq(amountFunded, SEND_VALUE); 
+        assertEq(amountFunded, SEND_VALUE);
     }
 
     function testAddsFunderToArrayOfFunders() public {
@@ -66,8 +63,9 @@ contract FundMeTest is Test {
         fundMe.fund{value: SEND_VALUE}();
         _;
     }
-     function testOnlyOwnerCanWithdraw() public funded {
-        vm.expectRevert(); 
+
+    function testOnlyOwnerCanWithdraw() public funded {
+        vm.expectRevert();
         vm.prank(USER);
         fundMe.withdraw();
     }
@@ -86,13 +84,12 @@ contract FundMeTest is Test {
         uint256 endingFundMeBalance = address(fundMe).balance;
         assertEq(endingFundMeBalance, 0);
         assertEq(startingFundMeBalance + startingOwnerBalance, endingOwnerBalance);
-
     }
 
     function testWithdrawFromMultipleFunders() public funded {
         // Arrange
         uint160 numberOfFunders = 10; // need uint160 to generate addresses
-        uint160 startingFunderIndex = 1; 
+        uint160 startingFunderIndex = 1;
         for (uint160 i = startingFunderIndex; i < numberOfFunders; i++) {
             // vm.prank new address
             // vm.deal new address
@@ -110,18 +107,18 @@ contract FundMeTest is Test {
         fundMe.withdraw();
 
         uint256 gasEnd = gasleft();
-        uint256 gasUsed = (gasStart - gasEnd)*tx.gasprice;
+        uint256 gasUsed = (gasStart - gasEnd) * tx.gasprice;
         console.log("Gas used: ", gasUsed);
 
         // Assert
         assert(address(fundMe).balance == 0);
-        assert(startingFundMeBalance + startingOwnerBalance ==  fundMe.getOwner().balance);
+        assert(startingFundMeBalance + startingOwnerBalance == fundMe.getOwner().balance);
     }
 
     function testWithdrawFromMultipleFundersCheaper() public funded {
         // Arrange
         uint160 numberOfFunders = 10; // need uint160 to generate addresses
-        uint160 startingFunderIndex = 1; 
+        uint160 startingFunderIndex = 1;
         for (uint160 i = startingFunderIndex; i < numberOfFunders; i++) {
             // vm.prank new address
             // vm.deal new address
@@ -139,12 +136,11 @@ contract FundMeTest is Test {
         fundMe.cheaperWithdraw();
 
         uint256 gasEnd = gasleft();
-        uint256 gasUsed = (gasStart - gasEnd)*tx.gasprice;
+        uint256 gasUsed = (gasStart - gasEnd) * tx.gasprice;
         console.log("Gas used: ", gasUsed);
 
         // Assert
         assert(address(fundMe).balance == 0);
-        assert(startingFundMeBalance + startingOwnerBalance ==  fundMe.getOwner().balance);
+        assert(startingFundMeBalance + startingOwnerBalance == fundMe.getOwner().balance);
     }
-    }   
-
+}

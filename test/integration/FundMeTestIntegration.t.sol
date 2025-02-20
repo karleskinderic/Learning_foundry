@@ -8,11 +8,10 @@ import {FundMe} from "../../src/FundMe.sol";
 import {Test, console} from "../../lib/forge-std/src/Test.sol";
 
 contract InteractionsTest is Test {
+    FundMe public fundMe;
+    DeployFundMe deployFundMe;
 
-    FundMe public fundMe; 
-    DeployFundMe deployFundMe; 
-
-    uint256 public constant SEND_VALUE = 0.1 ether; 
+    uint256 public constant SEND_VALUE = 0.1 ether;
     uint256 public constant STARTING_BALANCE = 10 ether;
 
     address alice = makeAddr("alice");

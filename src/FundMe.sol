@@ -90,21 +90,17 @@ contract FundMe {
     }
 
     /**
-    * View / Pure functions (Getters)
-    */
-
-    function getAddressToAmountFunded(
-        address fundingAddress
-    ) external view returns(uint256) {
+     * View / Pure functions (Getters)
+     */
+    function getAddressToAmountFunded(address fundingAddress) external view returns (uint256) {
         return s_addressToAmountFunded[fundingAddress];
     }
 
-    function getFunder(uint256 index) external view returns(address) {
+    function getFunder(uint256 index) external view returns (address) {
         return s_funders[index];
     }
 
-    function getOwner() external view returns(address) {
+    function getOwner() external view returns (address) {
         return i_owner;
     }
-
 }
